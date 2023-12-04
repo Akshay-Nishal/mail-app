@@ -71,15 +71,50 @@ const LoginForm = (props) => {
         })
     }
     else{
-      const enteredConfPass = confPassRef.current.value
-      if(enteredPass===enteredConfPass){
-        console.log("Logging Out")
-        fetch()
+        const enteredConfPass = confPassRef.current.value
+        if(enteredPass===enteredConfPass){
+  
+          fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
+          {
+            method:'POST',
+            body:JSON.stringify({
+              email:enteredEmail,
+              password:enteredPass,
+              returnSecureToken:true
+            }),
+            headers:{
+              'Content-Type':'application/json'
+            }
+          })
+          .then(res=>{
+            setLoading(false)
+            if(res.ok){
+              return(res.json())
+            }
+            else{
+              return res.json().then(data=>{
+                let errorMessage = 'Email Already Exists!'
+                throw new Error(errorMessage)
+                
+              })
+            }
+          })
+          .then(data=>{
+            dispatch(authActions.login(data))
+            console.log(data)
+            localStorage.setItem('isLogin',true)
+            localStorage.setItem('currentUserData',JSON.stringify(data))
+            localStorage.setItem('currentEmail',enteredEmail.replace("@",'').replace('.',''))
+          })
+          .catch(error=>{
+            window.alert(error)
+            console.log(error)
+          })
+        }
+        else{
+          window.alert('Passsword and Confirm password doesnt match!!!')
+        }
       }
-      else{
-        window.alert('Passsword and Confirm password doesnt match!!!')
-      }
-    }
   }
     
 
