@@ -20,7 +20,6 @@ const LoginForm = (props) => {
   const forgotemailInputRef = useRef()
   const passInputRef = useRef()
   const confPassRef = useRef()
-
   const dispatch = useDispatch()
 
   const switchAuthModeHandler = () => {
@@ -148,7 +147,7 @@ const LoginForm = (props) => {
     
     return (
       <section className={classes.auth}>
-      <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+      <h1>{isLogin ? 'Login Form' : 'Sign Up Form'}</h1>
       {forgotPass && <div className={classes.forgotPass}>
         <label htmlFor="resetPass"><h2>Enter Email</h2></label>
         <br />
@@ -172,7 +171,6 @@ const LoginForm = (props) => {
             required
           />
         </div>
-        {isLogin && <button onClick={changeForgotPass} style={{marginTop:'20px'}}>Forgot Password</button> }
 
         {!isLogin && <div className={classes.control}>
           <label htmlFor='confpassword'>Confirm Password</label>
@@ -181,12 +179,14 @@ const LoginForm = (props) => {
             type='password'
             id='confpassword'
             required
-          />
+            />
         </div>}
+
+        {!isLogin && <button data-testid="forgotpassword-button" onClick={changeForgotPass} style={{marginTop:'20px'}}>Forgot Password</button> }
 
         <div className={classes.actions}>
             {content}
-          <button type='button' className={classes.toggle} onClick={switchAuthModeHandler}>
+          <button data-testid='login-signup-state-change' type='button' className={classes.toggle} onClick={switchAuthModeHandler}>
             {isLogin ? 'Create new account' : 'Login with existing account'}
           </button>
         </div>
