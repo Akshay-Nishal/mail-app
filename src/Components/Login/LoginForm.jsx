@@ -2,6 +2,8 @@ import { useState, useRef} from 'react';
 import classes from './LoginForm.module.css';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../../Store/store';
+import { useNavigate } from 'react-router';
+
 
 
 // import { unstable_HistoryRouter } from 'react-router-dom';
@@ -12,6 +14,7 @@ const resetPassURL = 'https://identitytoolkit.googleapis.com/v1/accounts:sendOob
 
 
 const LoginForm = (props) => {
+  const history = useNavigate()
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading,setLoading] = useState(false)
   const [forgotPass, setforgotPass] = useState(false)
@@ -182,7 +185,7 @@ const LoginForm = (props) => {
             />
         </div>}
 
-        {!isLogin && <button data-testid="forgotpassword-button" onClick={changeForgotPass} style={{marginTop:'20px'}}>Forgot Password</button> }
+        {isLogin && <button data-testid="forgotpassword-button" onClick={changeForgotPass} style={{marginTop:'20px'}}>Forgot Password</button> }
 
         <div className={classes.actions}>
             {content}

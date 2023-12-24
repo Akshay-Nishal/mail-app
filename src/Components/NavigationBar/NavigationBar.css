@@ -1,0 +1,23 @@
+.flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.NavigationBar{
+    background-color: rgb(227, 227, 227);
+    padding: 7px 20px;
+    width: 100%;
+}
+a{ 
+    text-decoration: none !important;
+}
+
+.LeftNav{
+    font-size: 20px;
+}
+
+.navItem{
+    margin-right: 15px;
+    display: inline;
+    color: rgb(71, 71, 71);
+}
