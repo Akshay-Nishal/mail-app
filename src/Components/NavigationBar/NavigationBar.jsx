@@ -6,6 +6,11 @@ import { authActions } from '../../Store/store';
 
 
 function NavigationBar() {
+  const dispatch = useDispatch()
+  const logoutHandler = () =>{
+    dispatch(authActions.logout())
+    localStorage.clear()
+  }
   return (
     <div className="NavigationBar flex">
       <div className="LeftNav">
@@ -18,7 +23,7 @@ function NavigationBar() {
         <Link className='navItem' to='/outbox'>Sent</Link>
       </div>
       <div className="RightNav">
-        <button>Logout</button>
+        <button onClick={logoutHandler}>Logout</button>
       </div>
     </div>
   )

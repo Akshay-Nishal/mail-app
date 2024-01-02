@@ -20,15 +20,24 @@ function Compose() {
 
         if(mess && to && subject){
             setMessage('Mail Sent Successfully')
-            setStatus(true)
-            console.log(mess,to)
-            fetch(`https://react-ecom-f4305-default-rtdb.asia-southeast1.firebasedatabase.app/mailAPP/`+localStorage.getItem('currentEmail')+'/sent.json',{
+            // console.log(mess,to)
+            fetch(`https://react-ecom-f4305-default-rtdb.asia-southeast1.firebasedatabase.app/mailAPP/`+localStorage.getItem('currentEmail').replace("@",'').replace('.','')+'/sent.json',{
                 method:'POST',
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body:JSON.stringify({to:to,subject:subject,mail:mess})
-            }).then(res=>{console.log(res)})
+            }).then(res=>{
+                console.log(res)
+                fetch(`https://react-ecom-f4305-default-rtdb.asia-southeast1.firebasedatabase.app/mailAPP/`+to.replace("@",'').replace('.','')+'/received.json',{
+                    method:'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body:JSON.stringify({from:localStorage.getItem('currentEmail'),subject:subject,mail:mess})
+                })
+                .then(res=>{console.log(res)})
+            })
             .catch(err=>console.log(err))
         }
         else{

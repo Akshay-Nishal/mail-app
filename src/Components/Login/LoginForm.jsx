@@ -65,7 +65,7 @@ const LoginForm = (props) => {
             dispatch(authActions.login(data))
             localStorage.setItem('isLogin',true)
             localStorage.setItem('currentUserData',JSON.stringify(data))
-            localStorage.setItem('currentEmail',enteredEmail.replace("@",'').replace('.',''))
+            localStorage.setItem('currentEmail',enteredEmail)
         })
         .catch(error=>{
             window.alert(error)
@@ -103,10 +103,10 @@ const LoginForm = (props) => {
           })
           .then(data=>{
             dispatch(authActions.login(data))
-            console.log(data)
+            // console.log(data)
             localStorage.setItem('isLogin',true)
             localStorage.setItem('currentUserData',JSON.stringify(data))
-            localStorage.setItem('currentEmail',enteredEmail.replace("@",'').replace('.',''))
+            localStorage.setItem('currentEmail',enteredEmail)
           })
           .catch(error=>{
             window.alert(error)
