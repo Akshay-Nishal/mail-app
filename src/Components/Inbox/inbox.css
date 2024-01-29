@@ -1,9 +1,65 @@
+.mail{
+    margin-left: 25px;
+    display: block;
+    align-items: center;
+    /* display: flex; */
+    margin-bottom: 10px;
+    margin-right: 100px;
+    font-size: 17px;
+    padding-right: 50px;
+    border-bottom: 2px solid rgb(192, 192, 192);
+}
+.unread{
+    background-color: rgb(231, 231, 231)  ;
+    overflow: hidden;
+    font-weight: 500;
+    border-bottom: 2px solid rgb(0, 0, 0);
+}
 img{
     height: 20px;
+    transition: 0.5s;
+}
+img:hover{
+    scale:1.2;
+    background-color: rgb(255, 110, 110);
 }
 button{
     border: none;
 }
-span{
-    
+
+.mail-content{
+    display: inline-flex;
+    cursor: pointer;
+    align-items: center;
+}
+
+p{
+    margin-bottom: 0rem !important;
+}
+
+.from,.mail-text{
+    margin-left: 15px;
+}
+
+
+.mailShow{
+    left: 20%;
+    right: 20%;
+    position: absolute;
+    background-color: grey;
+    min-height: 150px;
+    min-width: 350px;
+    padding: 20px 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.close{
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: 50%;
+    background-color: grey;
+    color: red;
+    font-size: 30px;
 }

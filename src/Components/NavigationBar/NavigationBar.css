@@ -17,7 +17,18 @@ a{
 }
 
 .navItem{
-    margin-right: 15px;
+    margin-right: 35px;
     display: inline;
     color: rgb(71, 71, 71);
+}
+
+.unreadNumbar{
+    /* display: block; */
+    color: white;
+    padding: 0px 5px;
+    font-size: 15px;
+    min-width: 10px; /* Adjust the width and height as needed */
+    height: 10px;
+    border-radius: 50%; /* Makes the div round */
+    background-color: #136aa4;
 }

@@ -8,7 +8,8 @@ const initalAuthState={
 
 const initialMailState = {
     sent:{},
-    received:{}
+    received:{},
+    unreadNumber:0,
 }
 
 const mailSlice = createSlice({
@@ -16,10 +17,46 @@ const mailSlice = createSlice({
     initialState:initialMailState,
     reducers:{
         firstLoad(state,action){
-            console.log(action.payload.sentMails)
-            console.log(action.payload.receivedMails)
-            state.sent=action.payload.sentMails
-            state.received=action.payload.receivedMails
+            // console.log(Object.entries(action.payload.receivedMails))
+            // console.log(action.payload.sentMails)
+            state.sent=Object.entries(action.payload.sentMails)
+            state.received=Object.entries(action.payload.receivedMails)
+            for(let i = 0; i<state.received.length;++i){
+                if(state.received[i][1].status ==='unread'){
+                state.unreadNumber = state.unreadNumber + 1
+              }
+            //   console.log(unreadNum)
+            }
+        },
+        onRead(state,actions){
+            // console.log(actions.payload.id)
+            for(let i = 0; i<state.received.length;++i){
+                if(state.received[i][1].status ==='unread'){
+                    state.received[i][1].status ='read'
+                    state.unreadNumber = state.unreadNumber - 1
+                    break
+                }
+            //   console.log(unreadNum)
+            }
+            
+        },
+        onDelete(state,action){
+            console.log("Here",action.payload)
+            var ind = -1
+            for(let i = 0; i<state.received.length;++i){
+                if(state.received[i][0]===action.payload.id){
+                    ind=i
+
+                    break
+                }
+            }
+            if (ind !== -1) {
+                if(state.received[ind][1].status ==='unread'){
+                    state.unreadNumber = state.unreadNumber - 1
+                }
+                state.received.splice(ind, 1);
+            }
+            console.log("Index : ",ind)
         }
     }
 

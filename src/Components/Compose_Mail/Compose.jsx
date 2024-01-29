@@ -34,7 +34,7 @@ function Compose() {
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body:JSON.stringify({from:localStorage.getItem('currentEmail'),subject:subject,mail:mess})
+                    body:JSON.stringify({from:localStorage.getItem('currentEmail'),subject:subject,mail:mess,status:'unread'})
                 })
                 .then(res=>{console.log(res)})
             })
