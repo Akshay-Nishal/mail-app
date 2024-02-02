@@ -8,6 +8,7 @@ function Inbox() {
   const dispatch = useDispatch()
   const [mailShow,setMailShow] = useState(false)
   const [from,setFrom] = useState('')
+  const [subject,setSubject] = useState('')
   const [content,setContent] = useState('')
   const mails = useSelector((state)=>state.mails.received)
   const truncateText = (text, maxLength) => {
@@ -53,7 +54,7 @@ function Inbox() {
       .then(res=>{
         if(res.ok===true){
           console.log("Deleted Succesfully")
-          dispatch(mailActions.onDelete({id:key}))
+          dispatch(mailActions.onDelete({id:key,in:"received"}))
         }
       })
     }
@@ -62,6 +63,7 @@ function Inbox() {
 
   const showMail = (mail) =>{
     setFrom(mail[1].from)
+    setSubject(mail[1].subject)
     setContent(mail[1].mail)
     if(mail[1].status==='unread'){
       // console.log("Changed")
@@ -74,6 +76,7 @@ function Inbox() {
   const closeMail = () =>{
     setFrom('')
     setContent('')
+    setSubject('')
     setMailShow(false)
 
   }
@@ -88,6 +91,7 @@ function Inbox() {
         <button onClick={closeMail} className='close'>X</button>
         <h2>Mail</h2>
         <h4>From: {from}</h4>
+        <h5>Subject: {subject}</h5>
         <p dangerouslySetInnerHTML = {{ __html: content }}/>
       </div>}
       {mails.length>0 && mails.map(mail=>{

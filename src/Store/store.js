@@ -43,20 +43,35 @@ const mailSlice = createSlice({
         onDelete(state,action){
             console.log("Here",action.payload)
             var ind = -1
-            for(let i = 0; i<state.received.length;++i){
-                if(state.received[i][0]===action.payload.id){
-                    ind=i
-
-                    break
+            if(action.payload.in==='received'){
+                for(let i = 0; i<state.received.length;++i){
+                    if(state.received[i][0]===action.payload.id){
+                        ind=i
+                        
+                        break
+                    }
+                }
+                console.log("Index : ",ind)
+                if (ind !== -1) {
+                    if(state.received[ind][1].status ==='unread'){
+                        state.unreadNumber = state.unreadNumber - 1
+                    }
+                    state.received.splice(ind, 1);
                 }
             }
-            if (ind !== -1) {
-                if(state.received[ind][1].status ==='unread'){
-                    state.unreadNumber = state.unreadNumber - 1
+            if(action.payload.in==='sent'){
+                console.log("deleting from sent");
+                for(let i = 0; i<state.sent.length;++i){
+                    if(state.sent[i][0]===action.payload.id){
+                        ind=i
+                        break
+                    }
                 }
-                state.received.splice(ind, 1);
+                console.log("Index : ",ind)
+                if (ind !== -1) {
+                    state.sent.splice(ind, 1);
+                }
             }
-            console.log("Index : ",ind)
         }
     }
 

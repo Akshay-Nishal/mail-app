@@ -16,7 +16,7 @@ function App() {
   const dispatch = useDispatch()
   let receivedMails = {};
   let sentMails = {};
-  const fetchData = async (url) => {
+  const fetchData = async (url) => { 
     const response = await fetch(url, {
       method: 'GET',
       headers: {
