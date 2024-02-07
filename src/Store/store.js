@@ -17,6 +17,7 @@ const mailSlice = createSlice({
     initialState:initialMailState,
     reducers:{
         firstLoad(state,action){
+            state.unreadNumber = 0
             // console.log(Object.entries(action.payload.receivedMails))
             // console.log(action.payload.sentMails)
             state.sent=Object.entries(action.payload.sentMails)
@@ -27,6 +28,11 @@ const mailSlice = createSlice({
               }
             //   console.log(unreadNum)
             }
+        },
+        onLogOut(state){
+            state.sent = {}
+            state.received = {}
+            state.unreadNumber = 0 
         },
         onRead(state,actions){
             // console.log(actions.payload.id)

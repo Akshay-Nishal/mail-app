@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './NavigationBar.css'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { authActions } from '../../Store/store';
+import { authActions, mailActions } from '../../Store/store';
+
 
 function NavigationBar() {
   const unreadNum = useSelector((state)=>state.mails.unreadNumber)
@@ -10,6 +11,7 @@ function NavigationBar() {
   const dispatch = useDispatch()
   const logoutHandler = () =>{
     dispatch(authActions.logout())
+    dispatch(mailActions.onLogOut())
     localStorage.clear()
   }
   // useEffect(() => {

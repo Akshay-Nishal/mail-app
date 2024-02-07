@@ -66,6 +66,7 @@ const LoginForm = (props) => {
             localStorage.setItem('isLogin',true)
             localStorage.setItem('currentUserData',JSON.stringify(data))
             localStorage.setItem('currentEmail',enteredEmail)
+            props.onLogin()
         })
         .catch(error=>{
             window.alert(error)
@@ -107,6 +108,7 @@ const LoginForm = (props) => {
             localStorage.setItem('isLogin',true)
             localStorage.setItem('currentUserData',JSON.stringify(data))
             localStorage.setItem('currentEmail',enteredEmail)
+            props.onLogin()
           })
           .catch(error=>{
             window.alert(error)

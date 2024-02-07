@@ -45,18 +45,28 @@ function App() {
   };
 
   const fetchDataAsync = async () => {
-    await Promise.all([fetchSentMails(), fetchReceivedMails()]);
-    // console.log('Sent', sentMails, 'Received',receivedMails);
-    dispatch(mailActions.firstLoad({sentMails,receivedMails}))
+    if(localStorage.getItem('isLogin')==='true'){
+      console.log('Fetching Data...')
+      await Promise.all([fetchSentMails(), fetchReceivedMails()]);
+      // console.log('Sent', sentMails, 'Received',receivedMails);
+      dispatch(mailActions.firstLoad({sentMails,receivedMails}))
+    }
   };
 
   useEffect(() => {
     if(localStorage.getItem('isLogin')==='true'){
       dispatch(authActions.login(JSON.parse(localStorage.getItem('currentUserData'))))
       fetchDataAsync();
+
+      const intervalId = setInterval(fetchDataAsync, 2000); // Call every 2 seconds
+      return () => clearInterval(intervalId);
     }
   },[])
 
+  const loginSuccess =()=>{
+    console.log("Successfully Logged In")
+    fetchDataAsync()
+  }
 
   return (
     <div className="App">
@@ -72,7 +82,7 @@ function App() {
         <Route path="*" element={<Navigate to='/'/>}></Route>
         </>
         :
-        <><Route path="/login" element={<LoginForm/>} ></Route>
+        <><Route path="/login" element={<LoginForm onLogin={loginSuccess}/>} ></Route>
         <Route path="*" element={<Navigate to='/login'/>} ></Route>
         </>
         }
