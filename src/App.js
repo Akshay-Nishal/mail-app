@@ -9,63 +9,73 @@ import Compose from './Components/Compose_Mail/Compose';
 import NavigationBar from './Components/NavigationBar/NavigationBar';
 import Inbox from './Components/Inbox/Inbox';
 import Outbox from './Components/Sent_Mail/Outbox';
+import useMailFetcher from './hooks/useMailFetcher';
 
 
 function App() {
   const auth = useSelector(state=>state.auth.isLogin)
+  const {one,two} = useMailFetcher()
   const dispatch = useDispatch()
-  let receivedMails = {};
-  let sentMails = {};
-  const fetchData = async (url) => { 
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    return response.json();
-  };
+  // const dispatch = useDispatch()
+  // let receivedMails = {};
+  // let sentMails = {};
+  // const fetchData = async (url) => { 
+  //   const response = await fetch(url, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   });
+  //   return response.json();
+  // };
   
-  const fetchSentMails = async () => {
-    try {
-      const data = await fetchData(`https://react-ecom-f4305-default-rtdb.asia-southeast1.firebasedatabase.app/mailAPP/${localStorage.getItem('currentEmail').replace('@', '').replace('.', '')}/sent.json`);
-      sentMails = data || {};
-    } catch (error) {
-      console.error('Error fetching sent mails:', error);
-    }
-  };
+  // const fetchSentMails = async () => {
+  //   try {
+  //     const data = await fetchData(`https://react-ecom-f4305-default-rtdb.asia-southeast1.firebasedatabase.app/mailAPP/${localStorage.getItem('currentEmail').replace('@', '').replace('.', '')}/sent.json`);
+  //     sentMails = data || {};
+  //   } catch (error) {
+  //     console.error('Error fetching sent mails:', error);
+  //   }
+  // };
   
-  const fetchReceivedMails = async () => {
-    try {
-      const data = await fetchData(`https://react-ecom-f4305-default-rtdb.asia-southeast1.firebasedatabase.app/mailAPP/${localStorage.getItem('currentEmail').replace('@', '').replace('.', '')}/received.json`);
-      receivedMails = data || {};
-    } catch (error) {
-      console.error('Error fetching received mails:', error);
-    }
-  };
+  // const fetchReceivedMails = async () => {
+  //   try {
+  //     const data = await fetchData(`https://react-ecom-f4305-default-rtdb.asia-southeast1.firebasedatabase.app/mailAPP/${localStorage.getItem('currentEmail').replace('@', '').replace('.', '')}/received.json`);
+  //     receivedMails = data || {};
+  //   } catch (error) {
+  //     console.error('Error fetching received mails:', error);
+  //   }
+  // };
 
-  const fetchDataAsync = async () => {
-    if(localStorage.getItem('isLogin')==='true'){
-      console.log('Fetching Data...')
-      await Promise.all([fetchSentMails(), fetchReceivedMails()]);
-      // console.log('Sent', sentMails, 'Received',receivedMails);
-      dispatch(mailActions.firstLoad({sentMails,receivedMails}))
-    }
-  };
+  // const fetchDataAsync = async () => {
+  //   if(localStorage.getItem('isLogin')==='true'){
+  //     console.log('Fetching Data...')
+  //     await Promise.all([fetchSentMails(), fetchReceivedMails()]);
+  //     // console.log('Sent', sentMails, 'Received',receivedMails);
+  //     dispatch(mailActions.firstLoad({sentMails,receivedMails}))
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if(localStorage.getItem('isLogin')==='true'){
+  //     dispatch(authActions.login(JSON.parse(localStorage.getItem('currentUserData'))))
+  //     fetchDataAsync();
+
+  //     const intervalId = setInterval(fetchDataAsync, 2000); // Call every 2 seconds
+  //     return () => clearInterval(intervalId);
+  //   }
+  // },[])
 
   useEffect(() => {
+    
     if(localStorage.getItem('isLogin')==='true'){
       dispatch(authActions.login(JSON.parse(localStorage.getItem('currentUserData'))))
-      fetchDataAsync();
-
-      const intervalId = setInterval(fetchDataAsync, 2000); // Call every 2 seconds
-      return () => clearInterval(intervalId);
     }
-  },[])
+  }, []);
 
   const loginSuccess =()=>{
     console.log("Successfully Logged In")
-    fetchDataAsync()
+    // fetchDataAsync()
   }
 
   return (
